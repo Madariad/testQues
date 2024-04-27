@@ -2,10 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 import QuestionsRandomPage from '@/page/questionsRandomPage'
+import QuestionsRandomFiveTine from '@/page/questionsRandomFiveTine'
+import QuestionsNo from '@/page/questionsNo'
 
 import {
   createBrowserRouter,
@@ -24,7 +26,7 @@ const router = createBrowserRouter(
       },
       {
         path: '/questionsRandomFiveTine',
-        element: <div className="">questionsRandomFiveTine</div>
+        element: <QuestionsRandomFiveTine />
       },
       {
         path: '/questionsStatistics',
@@ -32,7 +34,7 @@ const router = createBrowserRouter(
       },
       {
         path: '/questionsNo',
-        element: <div className="">questionsNo</div>
+        element: <QuestionsNo />
       }
 
   ]

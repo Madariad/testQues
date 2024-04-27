@@ -9,24 +9,32 @@ function shuffleArray(array) {
     }
     return array;
 }
-export default function QuestionsRandomPage() {
+export default function questionsNo() {
     const [question, setQuestion] = useState({});
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [storedQuestions, setStoredQuestions] = useState(() => {
         const questionsFromStorage = localStorage.getItem('questions');
         return questionsFromStorage ? JSON.parse(questionsFromStorage) : null;
     });
-    
-
- 
-    
 
     useEffect(() => {
         if (storedQuestions && storedQuestions.length > currentQuestion) {
+            // Отфильтровать вопросы, на которые был дан неправильный ответ
+            const incorrectQuestions = storedQuestions.filter(q => q.incorrectCount > 0);
+
+            // Отсортировать вопросы по количеству неправильных ответов (по убыванию)
+            const sortedQuestions = incorrectQuestions.sort((a, b) => b.incorrectCount - a.incorrectCount);
+
+            // Выбрать случайный вопрос для отображения
+            const randomIndex = Math.floor(Math.random() * sortedQuestions.length);
+            const selectedQuestion = sortedQuestions[randomIndex];
+
+            // Перемешать ответы
             const questionWithShuffledAnswers = {
-                ...storedQuestions[currentQuestion],
-                answers: shuffleArray([...storedQuestions[currentQuestion].answers])
+                ...selectedQuestion,
+                answers: shuffleArray([...selectedQuestion.answers])
             };
+
             setQuestion(questionWithShuffledAnswers);
         }
     }, [currentQuestion, storedQuestions]);
@@ -51,8 +59,9 @@ export default function QuestionsRandomPage() {
     
         
 
-        const updatedQuestions = storedQuestions.map((q, index) => {
-            if (index === currentQuestion) {
+        const updatedQuestions = storedQuestions.map(q => {
+            if (q.question === question.question) {
+                
                 return {
                     ...q,
                     correctCount: selectedAnswer === question.correctAnswer ? q.correctCount + 1 : q.correctCount,
@@ -61,6 +70,7 @@ export default function QuestionsRandomPage() {
             }
             return q;
         });
+
     
         localStorage.setItem('questions', JSON.stringify(updatedQuestions));
 
@@ -73,10 +83,11 @@ export default function QuestionsRandomPage() {
         }, 2000);
     }
     
+   
 
     return (
        <>
-        <QuestionCards question={question} handleNextQuestion={nextQuestion}  totalQuestions={storedQuestions.length} currentQuestion={currentQuestion}/>
+        <QuestionCards question={question} handleNextQuestion={nextQuestion}  totalQuestions={question.length} currentQuestion={currentQuestion}/>
              
        </>
     );
