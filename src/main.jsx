@@ -9,16 +9,33 @@ import QuestionsRandomPage from '@/page/questionsRandomPage'
 import QuestionsRandomFiveTine from '@/page/questionsRandomFiveTine'
 import QuestionsNo from '@/page/questionsNo'
 
+import MainPage from '@/page/mainPage'
+import TestListPage from '@/page/testListPage';
+import TestPos from '@/page/testPos';
+
 import {
   createBrowserRouter,
+  Outlet,
   RouterProvider,
+  Link,
+  useNavigate
 } from "react-router-dom";
 
 const router = createBrowserRouter(
   [
-     {
-        path: "testQues/",
-        element: <App />,
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          index: true,
+          element: <MainPage/>,
+        },
+        {
+          path: "test",
+          element: <TestListPage/>
+        },
+        ],
       },
       {
         path: '/questionsRandom',
@@ -35,13 +52,19 @@ const router = createBrowserRouter(
       {
         path: '/questionsNo',
         element: <QuestionsNo />
+      },
+      {
+        path: '/testpos',
+        element: <TestPos />
       }
 
-  ]
+  ], {
+    basename: "/testQues",
+  }
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-     <RouterProvider router={router} />
+     <RouterProvider router={router}  />
   </React.StrictMode>,
 )

@@ -1,0 +1,29 @@
+html, body {
+    margin: 0;
+    padding: 0;
+   
+  }
+  .containerA {
+    height: 100vh;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    box-sizing: border-box; /* Добавляем box-sizing */
+    width: 100%; /* Устанавливаем ширину контейнера на 100% */
+  }
+  .panel {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    scroll-snap-align: start;
+    min-width: 100%; /* Добавляем min-width */
+    flex-direction: column;
+  }
+
+
+.blue {
+
+  background-color: rgb(7, 2, 38);
+}
+
