@@ -24,7 +24,7 @@ import {
 const router = createBrowserRouter(
   [
     {
-      path: "/",
+      path: "/testQues",
       element: <App />,
       children: [
         {
@@ -58,9 +58,7 @@ const router = createBrowserRouter(
         element: <TestPos />
       }
 
-  ], {
-    basename: "/testQues",
-  }
+  ]
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
